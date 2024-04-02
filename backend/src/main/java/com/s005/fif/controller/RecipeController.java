@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.s005.fif.common.auth.MemberDto;
 import com.s005.fif.common.response.Response;
 import com.s005.fif.dto.request.CompleteCookRequestDto;
+import com.s005.fif.dto.request.RecipeImageRequestDto;
 import com.s005.fif.dto.response.CompleteCookResponseDto;
 import com.s005.fif.dto.response.RecipeRecommendationResponseDto;
 import com.s005.fif.dto.response.RecipeResponseDto;
@@ -192,7 +193,7 @@ public class RecipeController {
             )
         }
     )
-    public Response generateAndSaveImageByRecipeNameAndIngredient(@RequestParam String recipeName, @RequestParam String ingredient) {
-        return new Response("imgUrl", recipeService.generateAndSaveImageByRecipeNameAndIngredient(recipeName, ingredient));
+    public Response generateAndSaveImageByRecipeNameAndIngredient(@Parameter(hidden = true) MemberDto memberDto, @RequestBody RecipeImageRequestDto dto) {
+        return new Response("imgUrl", recipeService.generateAndSaveImageByRecipeNameAndIngredient(memberDto.getMemberId(), dto.getRecipeId(), dto.getRecipeName(), dto.getIngredient()));
     }
 }
