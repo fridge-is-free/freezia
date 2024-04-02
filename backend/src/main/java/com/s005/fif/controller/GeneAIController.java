@@ -59,6 +59,8 @@ public class GeneAIController {
 
                     GeneAIResponseRecipeTempDto geneAIResponseRecipeTempDto = null;
                     Gson gson = new Gson();
+                    temp[0] = temp[0].replaceAll("```json", "");
+                    temp[0] = temp[0].replaceAll("```", "");
                     System.out.println(temp[0]);
                     geneAIResponseRecipeTempDto = gson.fromJson(temp[0], GeneAIResponseRecipeTempDto.class);
                     geneAIService.updateGeneAIRecipe(memberDto, geneAIPromptRequestDto.getRecipeId(), geneAIResponseRecipeTempDto);
