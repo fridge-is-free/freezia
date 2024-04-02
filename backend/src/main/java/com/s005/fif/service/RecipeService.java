@@ -137,7 +137,7 @@ public class RecipeService {
 		ArrayList<Recipe> recipes = new ArrayList<>();
 
 		// 1 ~ 4번에 해당하는 추천 유형만 조회
-		for (int i = 1; i <= 4; i++) {
+		for (int i = 4; i >= 1; i--) {
 			List<Recipe> recipe =
 				recipeRepository.findByMemberAndRecommendTypeOrderByCreateDateDesc(member, i);
 			if (recipe.isEmpty()) {
@@ -145,7 +145,7 @@ public class RecipeService {
 				// gptService.makeRecommendationRecipe(member, i);
 				continue;
 			}
-			recipes.add(recipe.get(0));
+			recipes.addAll(recipe);
 		}
 
 		return recipes.stream().map((r) ->
