@@ -44,7 +44,7 @@ export default function RecipeCreate() {
 
   const handleScroll = (e) => {
     const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
-    if (scrollTop + clientHeight < scrollHeight) {
+    if (scrollTop + clientHeight + 1 < scrollHeight) {
       setAutoScroll(false);
     } else {
       setAutoScroll(true);

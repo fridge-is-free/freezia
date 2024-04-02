@@ -16,10 +16,11 @@ export const getCreateRecipeId = async () => {
 };
 
 export const updateImage = async ({ recipeId, recipeName, ingredient }) => {
-  const { data } = await axios.post(
-    'generate-AI/generate-recipe-image-with-name',
-    { recipeId, recipeName, ingredient },
-  );
+  const { data } = await axios.post('recipes/image/name-and-ingredient', {
+    recipeId,
+    recipeName,
+    ingredient,
+  });
 
   return data.imgUrl;
 };

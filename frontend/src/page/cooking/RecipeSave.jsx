@@ -69,7 +69,9 @@ export default function RecipeSave() {
             src={`${recipeDetail.imgUrl}`}
             alt="음식 사진"
           />
-          <div className="recipe-save-card-name f-3">{recipeDetail?.name}</div>
+          <div className="recipe-save-card-name f-4 bold">
+            {recipeDetail?.name}
+          </div>
         </div>
         <div className="recipe-save-component-list-container">
           <div className="recipe-add-component-list-container">

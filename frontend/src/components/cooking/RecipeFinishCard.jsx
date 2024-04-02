@@ -14,8 +14,9 @@ export default function RecipeFinsishCard() {
           src={recipeDetail.imgUrl}
           alt="음식 사진"
         />
-        <div className="recipe-finish-card-name f-4">{recipeDetail?.name}</div>
-        <div className="recipe-finish-card-bookmark-wrapper"></div>
+        <div className="recipe-finish-card-name f-4 bold">
+          {recipeDetail?.name}
+        </div>
       </div>
       <div className="recipe-finish-card-box">
         <div className="recipe-finsih-card-info-box">

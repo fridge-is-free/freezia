@@ -48,7 +48,7 @@ class ReplyParser {
               .join(',');
 
             updateImage({
-              recipeId: createRecipeId,
+              recipeId: JSON.parse(createRecipeId),
               recipeName: this.recipe.recipeList[idx].name,
               ingredient,
             }).then((imgUrl) => {

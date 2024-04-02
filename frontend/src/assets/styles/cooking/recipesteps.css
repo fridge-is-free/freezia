@@ -103,7 +103,7 @@
 }
 
 .recipe-step-content-stt-button {
-  padding: 1vw;
+  padding: 1.2vw;
   margin: 1.5vw 0;
   display: flex;
   align-items: center;
@@ -115,8 +115,7 @@
 }
 
 .recipe-step-content-stt-button-icon {
-  width: 2.5vw;
-  height: 2.5vw;
+  height: 1.5vw;
 }
 
 .progress-up {

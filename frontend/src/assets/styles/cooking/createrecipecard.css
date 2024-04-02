@@ -24,9 +24,11 @@
   position: absolute;
   bottom: 1.5vw;
   left: 2vw;
+  width: calc(100% - 4vw);
   font-size: 1.5vw;
   font-weight: 600;
   color: white;
+  word-break: keep-all;
 }
 
 .create-recipe-background-filter {
