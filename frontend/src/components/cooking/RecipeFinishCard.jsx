@@ -22,11 +22,11 @@ export default function RecipeFinsishCard() {
         <div className="recipe-finsih-card-info-box">
           <div className="recipe-finish-card-info-wrapper">
             <div className="f-1">요리 시간</div>
-            <div className="f-2">{`${recipeDetail?.cookTime} m`}</div>
+            <div className="f-2 bold">{`${recipeDetail?.cookTime} m`}</div>
           </div>
           <div className="recipe-finish-card-info-wrapper">
             <div className="f-1">칼로리</div>
-            <div className="f-2">{`${recipeDetail.calorie} kcal`}</div>
+            <div className="f-2 bold">{`${recipeDetail.calorie} kcal`}</div>
           </div>
         </div>
         <div className="recipe-finish-card-button-box">

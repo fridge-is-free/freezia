@@ -36,9 +36,9 @@ export default function RecipeSteps() {
     });
 
     return () => {
-      if (sessionStorage.isConnected === 'true') {
-        disconnectWatch(recipeDetail.recipeId);
-      }
+      // if (sessionStorage.isConnected === 'true') {
+      //   disconnectWatch(recipeDetail.recipeId);
+      // }
       window.removeEventListener('resize', event);
       sessionStorage.removeItem('currentStep');
     };

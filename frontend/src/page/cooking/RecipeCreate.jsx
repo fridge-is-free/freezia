@@ -6,6 +6,7 @@ import { chatExample, diseasesData, ingredientData } from '../../utils/data';
 
 import '../../assets/styles/cooking/recipecreate.css';
 import RealTimeMessage from '../../components/cooking/chat/RealTimeMessage';
+import ReplyMessage from '../../components/cooking/chat/ReplyMessage';
 import sendMessage, { registHook } from '../../apis/chat';
 
 export default function RecipeCreate() {
@@ -202,6 +203,7 @@ export default function RecipeCreate() {
         {'<'}
       </div>
       <div className="recipe-create-chat-container" onScroll={handleScroll}>
+        <ReplyMessage />
         {chatLog.map(({ chat, isReply, recipeInfo, id }) => {
           return isReply ? (
             <RealTimeMessage recipe={recipeInfo} key={id} />

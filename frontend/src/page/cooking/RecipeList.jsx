@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import FilterList from '../../components/cooking/FilterList';
 import Header from '../../components/cooking/Header';
@@ -14,6 +14,7 @@ export default function RecipeList() {
   );
   const [selectedList, setSelectedList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
+  const recipeListRef = useRef(null);
 
   useEffect(() => {
     getRecipeList().then((recipes) => {
@@ -42,8 +43,9 @@ export default function RecipeList() {
         recipeTypeList={recipeTypeList}
         selectedList={selectedList}
         setSelectedList={setSelectedList}
+        recipeListRef={recipeListRef}
       />
-      <div className="cooking-recipe-list">
+      <div ref={recipeListRef} className="cooking-recipe-list">
         <Link
           to="/Cooking/recipe/create"
           className="recipe-create-button box-shadow link "
