@@ -34,13 +34,22 @@ export default function RecipeCreate() {
       ? JSON.parse(sessionStorage.recommendList)
       : [],
   );
-  let autoScroll = true;
+  const [autoScroll, setAutoScroll] = useState(true);
 
   // useEffect(() => {
   //   const { message } = newMessage;
   //   if (message.trim() === '') return;
   //   parser.parse({ chunk: message, recipe, setRecipe, setIsProgress });
   // }, [newMessage]);
+
+  const handleScroll = (e) => {
+    const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
+    if (scrollTop + clientHeight < scrollHeight) {
+      setAutoScroll(false);
+    } else {
+      setAutoScroll(true);
+    }
+  };
 
   const handleChange = (event) => {
     if (isProgress) return;
@@ -141,24 +150,17 @@ export default function RecipeCreate() {
       //     );
       //   });
 
-      let scrollEvent;
       if (sessionStorage.isDone !== 'false') {
         sendMessage(url, setRecipe, setIsProgress);
-        autoScroll = true;
-        scrollEvent = window.addEventListener('scroll', () => {
-          autoScroll = false;
-        });
+        messagesEndRef.current?.scrollIntoView();
+        setAutoScroll(true);
       }
-
-      return () => {
-        window.removeEventListener('scroll', scrollEvent);
-      };
     }
   }, [isProgress]);
 
   useEffect(() => {
     // messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    messagesEndRef.current?.scrollIntoView();
+    if (autoScroll) messagesEndRef.current?.scrollIntoView();
   }, [recipe]);
 
   const enterMessage = () => {
@@ -199,7 +201,7 @@ export default function RecipeCreate() {
       >
         {'<'}
       </div>
-      <div className="recipe-create-chat-container">
+      <div className="recipe-create-chat-container" onScroll={handleScroll}>
         {chatLog.map(({ chat, isReply, recipeInfo, id }) => {
           return isReply ? (
             <RealTimeMessage recipe={recipeInfo} key={id} />

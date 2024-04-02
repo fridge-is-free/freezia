@@ -19,7 +19,9 @@ export default function RealTimeMessage({ recipe }) {
             key="card"
           />
           <div className="create-recipe-info" key="unique">
-            <h1 className="create-recipe-name">{recipeInfo.name}</h1>
+            {!recipeInfo.imgUrl && (
+              <h1 className="create-recipe-name">{recipeInfo.name}</h1>
+            )}
             <div className="create-recipe-components">
               {recipeInfo.ingredientList.length > 0 && <h4>필요 식재료</h4>}
               {recipeInfo.ingredientList.map(({ name, amounts, unit }) => (

@@ -39,6 +39,22 @@ class ReplyParser {
         if (this.currentKey === '') {
           this.currentKey = this.buffer;
           this.currentKey = this.currentKey.trim();
+
+          if (this.currentKey === 'seasoningList') {
+            const { createRecipeId } = sessionStorage;
+            const idx = this.recipe.recipeList.length - 1;
+            const ingredient = this.recipe.recipeList[idx].ingredientList
+              .map(({ name }) => name)
+              .join(',');
+
+            updateImage({
+              recipeId: createRecipeId,
+              recipeName: this.recipe.recipeList[idx].name,
+              ingredient,
+            }).then((imgUrl) => {
+              this.recipe.recipeList[idx].imgUrl = imgUrl;
+            });
+          }
         } else {
           this.assignValue(this.buffer);
         }
@@ -59,6 +75,7 @@ class ReplyParser {
         if (this.currentKey === '') {
           this.currentKey = this.buffer;
           this.currentKey = this.currentKey.trim();
+
           this.isValue = false;
         } else {
           this.assignValue(this.buffer);
@@ -88,7 +105,7 @@ class ReplyParser {
       } else {
         // 'object'
         context.object[this.currentKey] = ('' + value).trim();
-        this.makeCard(this.currentKey, context.object[this.currentKey]);
+        // this.makeCard(this.currentKey, context.object[this.currentKey]);
         this.currentKey = '';
       }
       this.isValue = false;
@@ -198,19 +215,19 @@ class ReplyParser {
     }
   }
 
-  makeCard(key, value) {
-    const lastKey = this.keyStack[this.keyStack.length - 1];
-    console.log(key, value);
-    if (lastKey === 'recipeList' && key === 'name') {
-      const { createRecipeId } = sessionStorage;
-      updateImage({ recipeId: createRecipeId, recipeName: value }).then(
-        (imgUrl) => {
-          const idx = this.recipe.recipeList.length - 1;
-          this.recipe.recipeList[idx].imgUrl = imgUrl;
-        },
-      );
-    }
-  }
+  // makeCard(key, value) {
+  //   const lastKey = this.keyStack[this.keyStack.length - 1];
+  //   console.log(key, value);
+  //   if (lastKey === 'recipeList' && key === 'name') {
+  //     const { createRecipeId } = sessionStorage;
+  //     updateImage({ recipeId: createRecipeId, recipeName: value }).then(
+  //       (imgUrl) => {
+  //         const idx = this.recipe.recipeList.length - 1;
+  //         this.recipe.recipeList[idx].imgUrl = imgUrl;
+  //       },
+  //     );
+  //   }
+  // }
 
   parse(chunk) {
     for (const char of chunk) {

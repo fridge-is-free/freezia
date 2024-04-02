@@ -86,7 +86,7 @@ export default function Recipe() {
             src={
               saveYn
                 ? '/images/cooking/bookmark_orange.svg'
-                : '/images/cooking/bookmark.svg'
+                : '/images/cooking/bookmark_white.svg'
             }
             alt="북마크"
             className="header-icon-bookmark recipe-header-icon"
