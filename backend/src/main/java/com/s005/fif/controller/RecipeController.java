@@ -181,4 +181,18 @@ public class RecipeController {
     public Response generateAndSaveImageByRecipeName(@RequestParam String recipeName) {
         return new Response("imgUrl", recipeService.generateAndSaveImageByRecipeName(recipeName));
     }
+
+    @PostMapping("/image/name-and-ingredient")
+    @Operation(summary = "레시피 이름과 식재료로 레시피 이미지 생성 및 저장")
+    @ApiResponse(
+        content = {
+            @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = String.class)
+            )
+        }
+    )
+    public Response generateAndSaveImageByRecipeNameAndIngredient(@RequestParam String recipeName, @RequestParam String ingredient) {
+        return new Response("imgUrl", recipeService.generateAndSaveImageByRecipeNameAndIngredient(recipeName, ingredient));
+    }
 }
