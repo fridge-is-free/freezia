@@ -704,7 +704,15 @@ public class RecipeService {
 		recipeRepository.saveAndFlush(recipe);
 	}
 
-	public String generateAndSaveImageByRecipeNameAndIngredient(String recipeName, String ingredient) {
+	public String generateAndSaveImageByRecipeNameAndIngredient(Integer memberId, Integer recipeId, String recipeName, String ingredient) {
+		Recipe recipe = recipeRepository.findById(recipeId)
+			.orElseThrow(() -> new CustomException(ExceptionType.RECIPE_NOT_FOUND));
+
+		// [예외 처리] 본인의 레시피가 아닐 경우
+		if (!recipe.getMember().getMemberId().equals(memberId)) {
+			throw new CustomException(ExceptionType.RECIPE_NOT_ACCESSIBLE);
+		}
+
 		// buffer 크기 제한 해제
 		ExchangeStrategies exchangeStrategies = ExchangeStrategies.builder()
 			.codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(-1))
@@ -738,6 +746,10 @@ public class RecipeService {
 		// byte[] -> MultipartFile
 		CustomMultipartFile multipartFile = new CustomMultipartFile(image);
 
-		return s3Service.uploadFile(multipartFile);
+		String imgUrl = s3Service.uploadFile(multipartFile);
+		recipe.updateImgUrl(imgUrl);
+		recipeRepository.save(recipe);
+
+		return imgUrl;
 	}
 }
