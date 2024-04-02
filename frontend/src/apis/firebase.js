@@ -7,6 +7,8 @@ export const setFcmToken = async (fridgeId, token) => {
 };
 
 export const connectWatch = async (recipeId) => {
+  const { fcmToken } = sessionStorage;
+  await setFcmToken(1, fcmToken);
   axios.post(`recipes/${recipeId}/galaxy-watch`);
 };
 
@@ -17,6 +19,8 @@ export const disconnectWatch = async (recipeId) => {
 };
 
 export const moveStep = async (step) => {
+  const { fcmToken } = sessionStorage;
+  await setFcmToken(1, fcmToken);
   axios.post(`recipes/steps/${step}`, { sender: 0 });
 };
 
