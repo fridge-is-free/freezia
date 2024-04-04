@@ -137,7 +137,7 @@ public class RecipeService {
 		ArrayList<Recipe> recipes = new ArrayList<>();
 
 		// 1 ~ 4번에 해당하는 추천 유형만 조회
-		for (int i = 1; i <= 4; i++) {
+		for (int i = 4; i >= 1; i--) {
 			List<Recipe> recipe =
 				recipeRepository.findByMemberAndRecommendTypeOrderByCreateDateDesc(member, i);
 			if (recipe.isEmpty()) {
@@ -145,7 +145,7 @@ public class RecipeService {
 				// gptService.makeRecommendationRecipe(member, i);
 				continue;
 			}
-			recipes.add(recipe.get(0));
+			recipes.addAll(recipe);
 		}
 
 		return recipes.stream().map((r) ->
@@ -678,19 +678,19 @@ public class RecipeService {
 			.orElseThrow(() -> new CustomException(ExceptionType.MEMBER_NOT_FOUND));
 		Recipe dummyRecipe = Recipe.builder()
 			.member(member)
-			.name("맛있는 콩나물무침")
+			.name("없음")
 			// .createDate(LocalDate.now())
 			// .updateDate(LocalDate.now())
-			.cookTime(30)
-			.calorie(300)
-			.ingredientList("콩나물:300:g")
-			.seasoningList("참기름:1:T,소금:1:t,통깨:1:T")
+			.cookTime(0)
+			.calorie(0)
+			.ingredientList("")
+			.seasoningList("")
 			.imgUrl("https://example.com/recipe.jpg")
 			.saveYn(false)
 			.completeYn(false)
 			.recommendType(RecipeRecommendType.NONE.getNumber())
-			.recommendDesc("맛있는 콩나물 무침")
-			.recipeTypes("한식,밑반찬")
+			.recommendDesc("")
+			.recipeTypes("")
 			.serving(1)
 			.build();
 		Recipe saved = recipeRepository.save(dummyRecipe);
@@ -704,7 +704,15 @@ public class RecipeService {
 		recipeRepository.saveAndFlush(recipe);
 	}
 
-	public String generateAndSaveImageByRecipeNameAndIngredient(String recipeName, String ingredient) {
+	public String generateAndSaveImageByRecipeNameAndIngredient(Integer memberId, Integer recipeId, String recipeName, String ingredient) {
+		Recipe recipe = recipeRepository.findById(recipeId)
+			.orElseThrow(() -> new CustomException(ExceptionType.RECIPE_NOT_FOUND));
+
+		// [예외 처리] 본인의 레시피가 아닐 경우
+		if (!recipe.getMember().getMemberId().equals(memberId)) {
+			throw new CustomException(ExceptionType.RECIPE_NOT_ACCESSIBLE);
+		}
+
 		// buffer 크기 제한 해제
 		ExchangeStrategies exchangeStrategies = ExchangeStrategies.builder()
 			.codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(-1))
@@ -738,6 +746,10 @@ public class RecipeService {
 		// byte[] -> MultipartFile
 		CustomMultipartFile multipartFile = new CustomMultipartFile(image);
 
-		return s3Service.uploadFile(multipartFile);
+		String imgUrl = s3Service.uploadFile(multipartFile);
+		recipe.updateImgUrl(imgUrl);
+		recipeRepository.save(recipe);
+
+		return imgUrl;
 	}
 }

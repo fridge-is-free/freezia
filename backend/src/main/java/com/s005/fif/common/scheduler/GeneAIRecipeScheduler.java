@@ -63,8 +63,8 @@ public class GeneAIRecipeScheduler {
 
 		log.info("이전 레시피 삭제");
 		try {
-			int cnt = recipeService.deleteOldRecipes();
-			log.info("삭제된 레시피 개수: {}", cnt);
+			// int cnt = recipeService.deleteOldRecipes();
+			// log.info("삭제된 레시피 개수: {}", cnt);
 		} catch (Exception e) {
 			log.info("이전 레시피 삭제 실패", e);
 		}
