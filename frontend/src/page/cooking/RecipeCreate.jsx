@@ -6,6 +6,7 @@ import { chatExample, diseasesData, ingredientData } from '../../utils/data';
 
 import '../../assets/styles/cooking/recipecreate.css';
 import RealTimeMessage from '../../components/cooking/chat/RealTimeMessage';
+import ReplyMessage from '../../components/cooking/chat/ReplyMessage';
 import sendMessage, { registHook } from '../../apis/chat';
 
 export default function RecipeCreate() {
@@ -34,12 +35,22 @@ export default function RecipeCreate() {
       ? JSON.parse(sessionStorage.recommendList)
       : [],
   );
+  const [autoScroll, setAutoScroll] = useState(true);
 
   // useEffect(() => {
   //   const { message } = newMessage;
   //   if (message.trim() === '') return;
   //   parser.parse({ chunk: message, recipe, setRecipe, setIsProgress });
   // }, [newMessage]);
+
+  const handleScroll = (e) => {
+    const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
+    if (scrollTop + clientHeight + 1 < scrollHeight) {
+      setAutoScroll(false);
+    } else {
+      setAutoScroll(true);
+    }
+  };
 
   const handleChange = (event) => {
     if (isProgress) return;
@@ -142,13 +153,15 @@ export default function RecipeCreate() {
 
       if (sessionStorage.isDone !== 'false') {
         sendMessage(url, setRecipe, setIsProgress);
+        messagesEndRef.current?.scrollIntoView();
+        setAutoScroll(true);
       }
     }
   }, [isProgress]);
 
   useEffect(() => {
     // messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    messagesEndRef.current?.scrollIntoView();
+    if (autoScroll) messagesEndRef.current?.scrollIntoView();
   }, [recipe]);
 
   const enterMessage = () => {
@@ -189,7 +202,8 @@ export default function RecipeCreate() {
       >
         {'<'}
       </div>
-      <div className="recipe-create-chat-container">
+      <div className="recipe-create-chat-container" onScroll={handleScroll}>
+        <ReplyMessage />
         {chatLog.map(({ chat, isReply, recipeInfo, id }) => {
           return isReply ? (
             <RealTimeMessage recipe={recipeInfo} key={id} />

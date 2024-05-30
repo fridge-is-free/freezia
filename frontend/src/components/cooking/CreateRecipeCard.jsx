@@ -21,7 +21,7 @@ export default function CreateRecipeCard({ name, imgUrl }) {
             alt="이미지"
           />
           <div
-            className="create-recipe-background-filter"
+            className="create-recipe-background-filter box-shadow"
             onClick={() => {
               navigate(`/Cooking/recipe/${recipeId}`);
             }}

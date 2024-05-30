@@ -67,7 +67,7 @@
   padding: 0.5vw 2vw;
   display: flex;
   flex-direction: row;
-  font-size: 0.7vw;
+  font-size: 1.1vw;
   align-items: center;
 }
 
@@ -92,4 +92,8 @@
 .add-item-unit,
 .remove-item-unit {
   margin-left: 0.1vw;
+}
+
+.histroy-complete-date {
+  font-size: 1.2vw;
 }

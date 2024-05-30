@@ -19,14 +19,16 @@ export default function RealTimeMessage({ recipe }) {
             key="card"
           />
           <div className="create-recipe-info" key="unique">
-            <h1 className="create-recipe-name">{recipeInfo.name}</h1>
+            {!recipeInfo.imgUrl && (
+              <h1 className="create-recipe-name">{recipeInfo.name}</h1>
+            )}
             <div className="create-recipe-components">
-              {recipeInfo.ingredientList.length > 0 && <h4>필요 식재료</h4>}
+              {recipeInfo.ingredientList.length > 0 && <h3>필요 식재료</h3>}
               {recipeInfo.ingredientList.map(({ name, amounts, unit }) => (
                 <div key={name}>{`${name} ${amounts} ${unit}`}</div>
               ))}
               {recipeInfo.seasoningList.length > 0 &&
-                recipeInfo.seasoningList[0].name !== '' && <h4>필요 조미료</h4>}
+                recipeInfo.seasoningList[0].name !== '' && <h3>필요 조미료</h3>}
               {recipeInfo.seasoningList.map(({ name, amounts, unit }) => (
                 <div
                   key={name}
@@ -34,7 +36,7 @@ export default function RealTimeMessage({ recipe }) {
               ))}
             </div>
             <div className="create-recipe-info-box">
-              {recipeInfo.cookTime !== '' && <h4>요리 정보</h4>}
+              {recipeInfo.cookTime !== '' && <h3>요리 정보</h3>}
               {recipeInfo.cookTime !== '' && (
                 <span>{`요리 시간: ${recipeInfo.cookTime.match('분') ? recipeInfo.cookTime : `${Math.ceil(recipeInfo.cookTime / 60)}분`}`}</span>
               )}
@@ -46,7 +48,7 @@ export default function RealTimeMessage({ recipe }) {
               )}
             </div>
             <div className="create-recipe-steps">
-              {recipeInfo.recipeSteps.length > 0 && <h4>요리 방법</h4>}
+              {recipeInfo.recipeSteps.length > 0 && <h3>요리 방법</h3>}
               {recipeInfo.recipeSteps.map(({ name, description }, idx) => (
                 <div
                   className="create-recipe-step-description"

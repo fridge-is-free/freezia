@@ -17,7 +17,7 @@ export default function WaitingConnect() {
 
       setTimer(
         setTimeout(() => {
-          navigate(`/Cooking/recipe/${recipeId}/steps/0`);
+          navigate(`/Cooking/recipe/${recipeId}/steps/0`, { replace: true });
         }, 5000),
       );
     });
@@ -81,7 +81,7 @@ export default function WaitingConnect() {
               clearTimeout(timer);
               setTimer(null);
             }
-            navigate(`/Cooking/recipe/${recipeId}/connect`);
+            navigate(`/Cooking/recipe/${recipeId}/connect`, { replace: true });
           }}
         >
           취소

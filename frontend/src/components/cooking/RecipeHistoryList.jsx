@@ -14,7 +14,7 @@ export default function RecipeHistoryList({ recipeHistory }) {
         }) => (
           <div className="history-list-box box-shadow" key={completeCookId}>
             <div className="histroy-complete-date">{completeDate}</div>
-            <div className="history-complete-memo-box f-0">
+            <div className="history-complete-memo-box f-2">
               <span className="history-complete-memo-title bold">메모:</span>
               <span className="history-complete-memo">{memo}</span>
             </div>
@@ -26,7 +26,7 @@ export default function RecipeHistoryList({ recipeHistory }) {
                     src="/images/cooking/plus_orange.svg"
                     alt="더하기"
                   />
-                  <div className="list-type-title">새로 추가한 재료</div>
+                  <div className="list-type-title f-1">새로 추가한 재료</div>
                 </div>
                 {addIngredients.map(
                   ({ ingredientId, name, image, amounts, unit }) => (
@@ -56,7 +56,7 @@ export default function RecipeHistoryList({ recipeHistory }) {
                     src="/images/cooking/minus_orange.svg"
                     alt="빼기"
                   />
-                  <div className="list-type-title">사용하지 않은 재료</div>
+                  <div className="list-type-title f-1">사용하지 않은 재료</div>
                 </div>
                 {removeIngredients.map(
                   ({ ingredientId, name, image, amounts, unit }) => (

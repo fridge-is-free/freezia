@@ -2,11 +2,13 @@ export default function FilterList({
   recipeTypeList,
   selectedList,
   setSelectedList,
+  recipeListRef,
 }) {
   const selectItem = (idx) => {
     if (selectedList.includes(idx)) {
       setSelectedList(selectedList.filter((item) => item !== idx));
     } else setSelectedList([...selectedList, idx]);
+    recipeListRef.current.scrollTop = 0;
   };
 
   return (

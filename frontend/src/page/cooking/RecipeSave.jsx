@@ -31,10 +31,6 @@ export default function RecipeSave() {
       'addIngredientList',
       JSON.stringify(addIngredientList),
     );
-
-    return () => {
-      sessionStorage.removeItem('addIngredientList');
-    };
   }, [addIngredientList]);
 
   useEffect(() => {
@@ -42,10 +38,6 @@ export default function RecipeSave() {
       'removeIngredientList',
       JSON.stringify(removeIngredientList),
     );
-
-    return () => {
-      sessionStorage.removeItem('removeIngredientList');
-    };
   }, [removeIngredientList]);
 
   return (
@@ -77,7 +69,9 @@ export default function RecipeSave() {
             src={`${recipeDetail.imgUrl}`}
             alt="음식 사진"
           />
-          <div className="recipe-save-card-name f-3">{recipeDetail?.name}</div>
+          <div className="recipe-save-card-name f-4 bold">
+            {recipeDetail?.name}
+          </div>
         </div>
         <div className="recipe-save-component-list-container">
           <div className="recipe-add-component-list-container">
@@ -92,10 +86,10 @@ export default function RecipeSave() {
                 새로 추가한 재료
               </div>
               <Link
-                className="recipe-save-insert-button link f-1"
+                className="recipe-save-insert-button link f-2"
                 to="/Cooking/recipe/1/save/insert"
               >
-                +재료 추가하기
+                + 재료 추가하기
               </Link>
             </div>
             <div className="add-list-container">
@@ -125,10 +119,10 @@ export default function RecipeSave() {
                 사용하지 않은 재료
               </div>
               <Link
-                className="recipe-save-insert-button link f-1"
+                className="recipe-save-insert-button link f-2"
                 to="/Cooking/recipe/1/save/delete"
               >
-                - 재료 제거하기
+                {'- 재료 제거하기'}
               </Link>
             </div>
             <div className="add-list-container">
